@@ -59,7 +59,8 @@ server.on('connection', (ws:  WS.WebSocket) => {
                         socket.send(data);
                     }
                 });
-                if(debug) console.log(`Broadcast message in room: ${roomId}`);
+                if(debug)console.log(`Broadcast message in room: ${roomId} message ${message}`);
+                console.log(data.toString());
                 break;
             case 'SEND_TO_CONNECTION':
                 if (ws.readyState === WS.OPEN) {

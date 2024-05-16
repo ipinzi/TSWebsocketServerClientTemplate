@@ -1,5 +1,12 @@
 import * as WS from 'ws';
 import config from './config.json';
+import * as readline from 'readline';
+
+//Setup input read line
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
 const port = config.port;
 const ip = config.hostname;
@@ -15,10 +22,20 @@ ws.on('open', function open() {
     });
     ws.send(joinRoomMessage);
     if(debug) console.log('Sent join room message');
+
+    DoInput();
 });
 
+function DoInput(){
+    rl.question(`Type your message: `, (message: string) => {
+        sendMessage('BROADCAST_IN_ROOM','myRoom',message);
+        //rl.close();
+    });
+}
+
 ws.on('message', function incoming(data) {
-    console.log('Received message:', data);
+    console.log('Received message:', data.toString());
+    DoInput();
 });
 
 ws.on('close', function close() {
