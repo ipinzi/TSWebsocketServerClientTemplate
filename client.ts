@@ -16,7 +16,7 @@ const debug: boolean = process.argv.includes('--debug');
 ws.on('open', function open() {
     console.log('Connected to the server');
     const joinRoomMessage = JSON.stringify({
-        type: 'JOIN_ROOM',
+        cmd: 'JOIN_ROOM',
         roomId: 'myRoom',
         data: '',
     });
@@ -46,8 +46,8 @@ ws.on('error', function error(err) {
     console.log('An error occurred:', err);
 });
 
-function sendMessage(type: string, roomId: string, data: string) {
-    const message = JSON.stringify({ type, roomId, data });
+function sendMessage(cmd: string, roomId: string, data: string) {
+    const message = JSON.stringify({ cmd, roomId, data });
     ws.send(message);
     if(debug) console.log(`Sent message: ${message}`);
 }

@@ -33,9 +33,11 @@ server.on('connection', (ws:  WS.WebSocket) => {
     });
 
     ws.on('message', (message: string) => {
-        const { type, roomId, data } = JSON.parse(message);
+        const { cmd, roomId, data } = JSON.parse(message);
 
-        switch (type) {
+        console.log(cmd)
+
+        switch (cmd) {
             case 'JOIN_ROOM':
                 ws.roomId = roomId;
                 rooms[roomId] = [...(rooms[roomId] || []), ws];
